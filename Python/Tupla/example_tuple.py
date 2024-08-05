@@ -6,9 +6,6 @@ tupla_vazia = ()
 # Criando uma tupla com elementos
 tupla_numeros = (1, 2, 3, 4, 5)
 
-# Criando uma tupla sem parênteses (é possível, mas não recomendado para iniciantes)
-tupla_numeros_sem_parenteses = 1, 2, 3, 4, 5
-
 """ 2. Acessando Elementos da Tupla """
 
 # Acessando o primeiro elemento
