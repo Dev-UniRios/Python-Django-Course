@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Implementar uma aplicação de lista de tarefas em Django, permitindo que os usuários marquem tarefas como concluídas, excluam-nas e editem seus títulos. Além disso, a aplicação irá integrar autenticação de usuários, garantindo que cada usuário tenha suas próprias listas de tarefas. As etapas incluem a configuração de URLs, views, templates e a modelagem da tarefa para associá-la a um usuário.
+Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem seus títulos.
 
 ---
 
@@ -22,7 +22,7 @@ Implementar uma aplicação de lista de tarefas em Django, permitindo que os usu
      ]
      ```
 
-2. **Criar a View para marcar como concluída**:
+2. **Criar a view para marcar como concluída**:
    - No arquivo `views.py`, crie a função `concluir_tarefa`, que altera o status da tarefa para concluída:
      ```python
      from django.shortcuts import render, redirect, get_object_or_404
@@ -54,13 +54,13 @@ Implementar uma aplicação de lista de tarefas em Django, permitindo que os usu
 
 #### Parte 2: Adicionar a funcionalidade de excluir tarefas
 
-1. **Adicionar uma URL para Excluir Tarefas**:
+1. **Adicionar uma URL para excluir tarefas**:
    - No `urls.py` da aplicação `tarefas`, adicione o caminho para a exclusão de uma tarefa:
      ```python
      path('excluir/<int:id>/', views.excluir_tarefa, name='excluir_tarefa'),
      ```
 
-2. **Criar a View para excluir a tarefa**:
+2. **Criar a view para excluir a tarefa**:
    - No arquivo `views.py`, adicione uma função `excluir_tarefa` para remover a tarefa:
      ```python
      def excluir_tarefa(request, id):
@@ -95,7 +95,7 @@ Implementar uma aplicação de lista de tarefas em Django, permitindo que os usu
      path('editar/<int:id>/', views.editar_tarefa, name='editar_tarefa'),
      ```
 
-2. **Criar a View para editar a tarefa**:
+2. **Criar a view para editar a tarefa**:
    - No arquivo `views.py`, adicione a função `editar_tarefa` para carregar a tarefa, atualizar o título e salvar as alterações:
      ```python
      def editar_tarefa(request, id):
@@ -111,7 +111,7 @@ Implementar uma aplicação de lista de tarefas em Django, permitindo que os usu
          return render(request, 'editar_tarefa.html', {'tarefa': tarefa})
      ```
 
-3. **Criar o Template `editar_tarefa.html`**:
+3. **Criar o template `editar_tarefa.html`**:
    - Dentro de `templates/tarefas/`, crie um arquivo `editar_tarefa.html` para o formulário de edição:
      ```html
      <!DOCTYPE html>
