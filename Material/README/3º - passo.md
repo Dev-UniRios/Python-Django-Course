@@ -233,3 +233,21 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
     </html>
     ```
  - Caso ocorra algum problema com o redirecionamento para a raiz, basta colocar `LOGOUT_REDIRECT_URL = '/'` em `settings.py`
+
+7. **Criando um Superusuário**
+   - Para criar um superusuário no Django, execute o seguinte comando no terminal:
+     ```bash
+     python manage.py createsuperuser
+     ```
+   - Siga as instruções na tela para definir um nome de usuário, e-mail e senha.
+
+8. **Acessando o Admin do Django**
+   - Para acessar a interface administrativa do Django, abra seu navegador e vá para o seguinte endereço: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin).
+   - Insira suas credenciais de superusuário para fazer login.
+   - Para registrar seu modelo `Tarefa` no painel administrativo, adicione o seguinte código no seu arquivo `admin.py`:
+     ```python
+     from django.contrib import admin
+     from .models import Tarefa
+
+     admin.site.register(Tarefa)
+     ```
