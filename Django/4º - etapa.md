@@ -161,7 +161,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
          {% load static %}
          <meta charset="UTF-8">
          <title>{% block title %}To-Do List{% endblock %}</title>
-         <link rel="stylesheet" href="{% static 'tarefas/css/estilo.css' %}">
+         <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
      </head>
      <body>
          <header>
@@ -182,11 +182,11 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
          </div>
 
          <footer>
-             <p>&copy; 2023 Minha Aplicação de Lista de Tarefas</p>
+             <p>&copy; 2024 Aplicação de lista de tarefas</p>
          </footer>
 
          <!-- Scripts JavaScript -->
-         <script src="{% static 'tarefas/js/script.js' %}"></script>
+         <script src="{% static 'js/script.js' %}"></script>
      </body>
      </html>
      ```
@@ -380,7 +380,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
              return redirect('lista_tarefas')
 
          tarefas = Tarefa.objects.filter(usuario=request.user)
-         return render(request, 'tarefas/lista_tarefas.html', {'tarefas': tarefas})
+         return render(request, 'lista_tarefas.html', {'tarefas': tarefas})
      ```
 
 #### Parte 5: Melhorar a experiência do usuário
