@@ -135,10 +135,10 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
 
      STATIC_URL = '/static/'
 
-     # Para desenvolvimento, certifique-se de que STATICFILES_DIRS está configurado:
-     STATICFILES_DIRS = [
-         os.path.join(BASE_DIR, 'tarefas', 'static'),
-     ]
+     # Para desenvolvimento, certifique-se de que STATIC_ROOT está configurado:
+     import os
+     
+     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
      ```
 
 2. **Carregar a tag `static` nos Templates**
