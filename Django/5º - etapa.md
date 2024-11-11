@@ -96,7 +96,7 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
          </div>
 
          {% bootstrap_javascript jquery='full' %}
-         <script src="{% static 'tarefas/js/script.js' %}"></script>
+         <script src="{% static 'js/script.js' %}"></script>
      </body>
      </html>
      ```
@@ -222,7 +222,7 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
                  messages.error(request, 'O título da tarefa não pode ser vazio.')
              return redirect('lista_tarefas')
          tarefas = Tarefa.objects.filter(usuario=request.user)
-         return render(request, 'tarefas/lista_tarefas.html', {'tarefas': tarefas})
+         return render(request, 'lista_tarefas.html', {'tarefas': tarefas})
      ```
 
 2. **Exibir as mensagens nos templates**:
