@@ -54,7 +54,7 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
          <meta name="viewport" content="width=device-width, initial-scale=1">
          <title>{% block title %}To-Do List{% endblock %}</title>
          {% bootstrap_css %}
-         <link rel="stylesheet" href="{% static 'tarefas/css/estilo.css' %}">
+         <link rel="stylesheet" href="{% static 'css/style.css' %}">
      </head>
      <body>
          <nav class="navbar navbar-expand-lg navbar-light bg-light">

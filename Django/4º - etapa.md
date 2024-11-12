@@ -161,7 +161,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
          {% load static %}
          <meta charset="UTF-8">
          <title>{% block title %}To-Do List{% endblock %}</title>
-         <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+         <link rel="stylesheet" href="{% static 'css/style.css' %}">
      </head>
      <body>
          <header>
