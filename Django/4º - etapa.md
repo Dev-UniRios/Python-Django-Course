@@ -108,7 +108,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
 
 3. **Adicionar arquivos JavaScript**
 
-   - Se necessário, crie um arquivo `script.js` dentro de `tarefas/static/js/`.
+   - Crie um arquivo `script.js` dentro de `tarefas/static/js/`.
    - Adicione scripts JavaScript para melhorar a interatividade da aplicação. Por exemplo, você pode adicionar uma confirmação antes de excluir uma tarefa:
 
      ```javascript
@@ -133,10 +133,10 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
      ```python
      # lista_de_tarefas/settings.py
 
-     STATIC_URL = '/static/'
-
      # Para desenvolvimento, certifique-se de que STATIC_ROOT está configurado:
      import os
+
+     STATIC_URL = '/static/'
      
      STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
      ```
@@ -151,7 +151,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
 
 3. **Referenciar arquivos estáticos nos templates**
 
-   - No arquivo `base.html` ou nos templates específicos, inclua os arquivos CSS e JS:
+   - Crie um arquivo `base.html` no template e inclua os arquivos CSS e JS:
 
      ```html
      <!-- templates/base.html -->
@@ -315,7 +315,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
      from django.contrib.auth.models import User
 
      class Tarefa(models.Model):
-         titulo = models.CharField(max_length=100)
+         titulo = models.CharField(max_length=100, unique=True)
          concluida = models.BooleanField(default=False)
          usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
