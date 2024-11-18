@@ -12,11 +12,7 @@ Criar uma página HTML simples usando Django, que simule uma lista de tarefas se
 
 1. **Inicie um novo projeto Django**:
    ```bash
-<<<<<<< HEAD
-   django-admin startproject conf .
-=======
    django-admin startproject config .
->>>>>>> 664adf4 (:zap: Update project name in Django setup instructions for clarity)
    ```
 
 2. **Crie uma aplicação chamada `tarefas`**:
