@@ -158,7 +158,7 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
 2. **Associar usuários às tarefas**:
    - No `models.py` da aplicação `tarefas`, adicione uma referência ao usuário:
      ```python
-     from django.contrib.auth.models import User
+     from django.contrib.auth.models import User, models
 
      class Tarefa(models.Model):
          titulo = models.CharField(max_length=100)
