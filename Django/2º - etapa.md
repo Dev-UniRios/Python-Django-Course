@@ -23,7 +23,7 @@ Criar uma aplicação de lista de tarefas em Django, permitindo que os usuários
              return self.titulo
      ```
 
-   - Aqui, cada `Tarefa` tem um campo `titulo` para o nome da tarefa e um campo `concluida` que indica se a tarefa foi concluída.
+   - Aqui, cada `Tarefa` tem um campo `titulo` para o nome da tarefa e um campo `concluída` que indica se a tarefa foi concluída.
 
 2. **Criar e aplicar as migrações**:
    - No terminal, execute os comandos para criar e aplicar as migrações, o que criará a tabela `Tarefa` no banco de dados:

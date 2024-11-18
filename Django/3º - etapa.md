@@ -251,3 +251,10 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
 
      admin.site.register(Tarefa)
      ```
+
+### Próximos passos
+
+- Organizar arquivos estáticos (CSS, JavaScript e imagens) da aplicação.
+- Melhorar o design dos templates com estilos personalizados.
+- Configurar o `settings.py` para uso de arquivos estáticos.
+- Implementar mensagens de feedback para ações dos usuários.

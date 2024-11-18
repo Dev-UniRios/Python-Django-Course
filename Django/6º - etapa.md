@@ -236,3 +236,10 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 1. **Iniciar o servidor de desenvolvimento**:
    ```bash
    python manage.py runserver
+
+### Próximos passos
+
+- Configurar variações de imagem para miniaturas e redimensionamento no modelo `Tarefa`.
+- Aplicar migrações para atualizar o banco de dados com as variações de imagem.
+- Atualizar templates para exibir as miniaturas e imagens redimensionadas.
+- Implementar sinais para excluir imagens órfãs ao remover tarefas.
