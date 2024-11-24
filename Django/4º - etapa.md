@@ -39,8 +39,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - Adicione estilos personalizados para melhorar o visual da aplicação. Por exemplo:
 
      ```css
-     /* tarefas/static/css/style.css */
-
      body {
          font-family: Arial, sans-serif;
          background-color: #f5f5f5;
@@ -112,8 +110,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - Adicione scripts JavaScript para melhorar a interatividade da aplicação. Por exemplo, você pode adicionar uma confirmação antes de excluir uma tarefa:
 
      ```javascript
-     // tarefas/static/js/script.js
-
      function confirmarExclusao() {
          return confirm('Você tem certeza que deseja excluir esta tarefa?');
      }
@@ -138,20 +134,11 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
      STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
      ```
 
-2. **Carregar a tag `static` nos Templates**
-
-   - No início dos seus templates, carregue a tag `static`:
-
-     ```django
-     {% load static %}
-     ```
-
-3. **Referenciar arquivos estáticos nos templates**
+2. **Referenciar arquivos estáticos nos templates**
 
    - Crie um arquivo `base.html` no template e inclua os arquivos CSS e JS:
 
      ```html
-     <!-- templates/base.html -->
      <!DOCTYPE html>
      <html lang="pt-BR">
      <head>
@@ -182,18 +169,16 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
              <p>&copy; 2024 Aplicação de lista de tarefas</p>
          </footer>
 
-         <!-- Scripts JavaScript -->
          <script src="{% static 'js/script.js' %}"></script>
      </body>
      </html>
      ```
 
-4. **Atualizar os templates para usar classes e IDs do CSS**
+3. **Atualizar os templates para usar classes e IDs do CSS**
 
    - No `lista_tarefas.html`, adicione classes ou IDs aos elementos para aplicar os estilos definidos:
 
      ```html
-     <!-- tarefas/templates/tarefas/lista_tarefas.html -->
      {% extends 'base.html' %}
      {% block title %}Lista de Tarefas{% endblock %}
      {% block content %}
@@ -251,7 +236,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - Exemplo de atualização no `editar_tarefa.html`:
 
      ```html
-     <!-- tarefas/templates/tarefas/editar_tarefa.html -->
      {% extends 'base.html' %}
      {% block title %}Editar Tarefa{% endblock %}
      {% block content %}
@@ -273,8 +257,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - Estilize as mensagens no CSS para que elas se destaquem:
 
      ```css
-     /* tarefas/static/tarefas/css/estilo.css */
-
      .messages {
          list-style: none;
          padding: 0;
@@ -306,8 +288,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - No arquivo `models.py`, você pode adicionar métodos auxiliares ou propriedades:
 
      ```python
-     # tarefas/models.py
-
      from django.db import models
      from django.contrib.auth.models import User
 
@@ -354,8 +334,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - No `views.py`, atualize as funções para lidar com possíveis erros de validação:
 
      ```python
-     # tarefas/views.py
-
      from django.contrib import messages
      from django.core.exceptions import ValidationError
 
@@ -393,7 +371,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - Por exemplo, no `base.html`, adicione um menu:
 
      ```html
-     <!-- templates/base.html -->
      <nav>
          <ul>
              <li><a href="{% url 'lista_tarefas' %}">Início</a></li>
