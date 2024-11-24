@@ -232,7 +232,10 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
     </body>
     </html>
     ```
- - Caso ocorra algum problema com o redirecionamento para a raiz, basta colocar `LOGOUT_REDIRECT_URL = '/'` em `settings.py`
+ - Caso ocorra algum problema com o redirecionamento para a raiz, basta colocar no `settings.py` 
+    ```bash
+    LOGOUT_REDIRECT_URL = '/'
+   ```
 
 7. **Criando um Superusuário**
    - Para criar um superusuário no Django, execute o seguinte comando no terminal:
