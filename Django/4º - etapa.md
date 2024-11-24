@@ -131,9 +131,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - Certifique-se de que as configurações de arquivos estáticos estão corretas no `settings.py`:
 
      ```python
-     # lista_de_tarefas/settings.py
-
-     # Para desenvolvimento, certifique-se de que STATIC_ROOT está configurado:
      import os
 
      STATIC_URL = '/static/'
