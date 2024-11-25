@@ -68,39 +68,139 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
          color: gray;
      }
 
+     .form-adicionar-tarefa {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        width: 70%;
+        max-width: 600px;
+     }
+
      .form-adicionar-tarefa input[type="text"] {
-         width: 70%;
-         padding: 5px;
-         margin-right: 5px;
+        flex: 1;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
      }
 
      .form-adicionar-tarefa button {
-         padding: 5px 10px;
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+     }
+
+     .form-adicionar-tarefa button:hover {
+        background-color: #0056b3;
      }
 
      .lista-tarefas {
-         list-style: none;
-         padding: 0;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-width: 800px;
+        margin: 20px auto;
      }
 
      .lista-tarefas li {
-         background: #fff;
-         margin-bottom: 5px;
-         padding: 10px;
-         border: 1px solid #ccc;
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
+        background: #fff;
+        margin-bottom: 10px;
+        padding: 15px 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+     }
+
+     .lista-tarefas li:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
      }
 
      .lista-tarefas li a {
-         margin-left: 10px;
-         text-decoration: none;
-         color: #007BFF;
+        margin-left: 10px;
+        text-decoration: none;
+        color: #007BFF;
+        font-weight: bold;
+        transition: color 0.3s ease;
      }
 
      .lista-tarefas li a:hover {
-         text-decoration: underline;
+        color: #0056b3;
+        text-decoration: underline;
+     }
+
+     .lista-tarefas li span {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        flex: 1;
+        word-break: break-word;
+     }
+
+     .form-editar-tarefa {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+     }
+
+     .form-editar-tarefa input[type="text"] {
+        width: 96%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+     }
+
+     .form-editar-tarefa button {
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px;
+        align-self: flex-start;
+     }
+
+     .form-editar-tarefa button:hover {
+        background-color: #0056b3;
+     }
+
+     .form-editar-tarefa a {
+        text-decoration: none;
+        color: #007BFF;
+        font-size: 14px;
+        margin-top: 10px;
+        align-self: flex-start;
+     }
+
+     .form-editar-tarefa a:hover {
+        text-decoration: underline;
      }
      ```
 
@@ -140,38 +240,46 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
 
      ```html
      <!DOCTYPE html>
-     <html lang="pt-BR">
-     <head>
-         {% load static %}
-         <meta charset="UTF-8">
-         <title>{% block title %}To-Do List{% endblock %}</title>
-         <link rel="stylesheet" href="{% static 'css/style.css' %}">
-     </head>
-     <body>
-         <header>
-             <div class="container">
-                 <h1><a href="{% url 'lista_tarefas' %}" style="color: #fff; text-decoration: none;">Minha Lista de Tarefas</a></h1>
-             </div>
-         </header>
+        <html lang="pt-BR">
+        <head>
+            {% load static %}
+            <meta charset="UTF-8">
+            <title>{% block title %}To-Do List{% endblock %}</title>
+            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        </head>
+        <body>
+            <nav class="navbar">
+                <div class="navbar-container">
+                    <a href="{% url 'lista_tarefas' %}" class="navbar-brand">Minha Lista de Tarefas</a>
+                    <ul class="navbar-menu">
+                        <li><a href="{% url 'lista_tarefas' %}">Início</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'lista_tarefas' %}">Minhas tarefas</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}">Entrar</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+            <div class="container">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% block content %}{% endblock %}
+            </div>
 
-         <div class="container">
-             {% if messages %}
-                 <ul class="messages">
-                     {% for message in messages %}
-                         <li class="{{ message.tags }}">{{ message }}</li>
-                     {% endfor %}
-                 </ul>
-             {% endif %}
-             {% block content %}{% endblock %}
-         </div>
+            <footer>
+                <p>&copy; 2024 Aplicação de lista de tarefas</p>
+            </footer>
 
-         <footer>
-             <p>&copy; 2024 Aplicação de lista de tarefas</p>
-         </footer>
+            <script src="{% static 'js/script.js' %}"></script>
+        </body>
 
-         <script src="{% static 'js/script.js' %}"></script>
-     </body>
-     </html>
+        </html>
      ```
 
 3. **Atualizar os templates para usar classes e IDs do CSS**
@@ -251,7 +359,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
 
    - Atualize o CSS para estilizar o formulário de edição.
 
-3. **Adicionar feedback visual**
+3. **Adicionar feedback visual e menu**
 
    - Inclua mensagens de sucesso ou erro utilizando o framework de mensagens do Django, como mostrado anteriormente.
    - Estilize as mensagens no CSS para que elas se destaquem:
@@ -279,7 +387,249 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
          color: #721c24;
          border: 1px solid #f5c6cb;
      }
+
+     .navbar {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        font-family: Arial, sans-serif;
+     }
+
+     .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+     }
+
+     .navbar-brand {
+        font-size: 20px;
+        color: #fff;
+        text-decoration: none;
+     }
+
+     .navbar-menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 15px;
+     }
+
+     .navbar-menu li {
+        display: inline;
+     }
+
+     .navbar-menu a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+     }
+
+     .navbar-menu a:hover {
+        color: #007BFF;
+     }
+
+     .navbar-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+     }
+
+     @media (max-width: 768px) {
+        .navbar-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #333;
+            padding: 10px;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-menu.active {
+            display: flex;
+        }
+
+        .navbar-toggle {
+            display: block;
+        }
+     }
      ```
+
+4. **Atualizar o templates `login.html`**
+
+   - Utilize classes CSS para estilizar elementos de forma consistente.
+   - Exemplo de atualização no `login.html`:
+
+     ```html
+        {% load static %}
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Login</title>
+            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        </head>
+        <body>
+            <div class="login-container">
+                <h2>Login</h2>
+                <form method="POST" class="login-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Entrar</button>
+                </form>
+                <a href="{% url 'password_reset' %}" class="password-reset-link">Esqueci minha senha</a>
+            </div>
+        </body>
+        </html>
+     ```
+
+5. **Adicionar estilo visual na página login**
+   - Estilize as mensagens no CSS para que elas se destaquem:
+
+    ```css
+     .login-container {
+        width: 100%;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: justify;
+     }
+
+     .login-container h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+     }
+
+     .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+     }
+
+     .login-form input[type="text"],
+     .login-form input[type="password"] {
+        width: 96%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+     }
+
+     .login-form button {
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+     }
+
+     .login-form button:hover {
+        background-color: #0056b3;
+     }
+
+     .password-reset-link {
+        display: block;
+        margin-top: 15px;
+        font-size: 14px;
+        text-decoration: none;
+        color: #007BFF;
+        transition: color 0.3s ease;
+     }
+
+     .password-reset-link:hover {
+        color: #0056b3;
+     }
+    ```
+
+6. **Atualizar o templates `lista_tarefa.html` para incluir estilização no botão sair**
+
+   - Utilize classes CSS para estilizar elementos de forma consistente.
+   - Exemplo de atualização no `lista_tarefa.html`:
+
+     ```html
+     <div class="user-auth">
+        {% if user.is_authenticated %}
+        <p>
+            Bem-vindo, <strong>{{ user.username }}</strong>!
+        <form action="{% url 'logout' %}" method="post" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Sair</button>
+        </form>
+        </p>
+        {% else %}
+        <a href="{% url 'login' %}" class="login-link">Entrar</a>
+        {% endif %}
+     </div>
+     ```
+
+7. **Adicionar estilo visual na página lista_tarefas**
+   - Estilize as mensagens no CSS para que elas se destaquem:
+
+    ```css
+     .user-auth {
+        text-align: right;
+        margin: 10px;
+        font-size: 14px;
+        color: #333;
+     }
+
+     .user-auth p {
+        margin: 0;
+        display: inline-block;
+     }
+
+     .user-auth .logout-form {
+        display: inline;
+        margin: 0;
+     }
+
+     .user-auth .logout-button {
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+        margin-left: 5px;
+     }
+
+     .user-auth .logout-button:hover {
+        background-color: #0056b3;
+     }
+
+     .user-auth .login-link {
+        text-decoration: none;
+        color: #007BFF;
+        font-size: 14px;
+        transition: color 0.3s ease;
+     }
+
+     .user-auth .login-link:hover {
+        color: #0056b3;
+     }
+    ```
 
 #### Parte 4: Melhorar o modelo (`models.py`)
 
