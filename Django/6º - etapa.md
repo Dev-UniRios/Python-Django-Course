@@ -100,7 +100,7 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
              form = TarefaForm()
 
          tarefas = Tarefa.objects.filter(usuario=request.user)
-         return render(request, 'tarefas/lista_tarefas.html', {'tarefas': tarefas, 'form': form})
+         return render(request, 'lista_tarefas.html', {'tarefas': tarefas, 'form': form})
      ```
 
 3. **Modificar a view `editar_tarefa` para lidar com imagens**:
@@ -120,7 +120,7 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
          else:
              form = TarefaForm(instance=tarefa)
 
-         return render(request, 'tarefas/editar_tarefa.html', {'form': form})
+         return render(request, 'editar_tarefa.html', {'form': form})
      ```
 
 #### Parte 4: Atualizar os templates para suportar o upload e exibição de imagens
