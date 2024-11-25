@@ -95,45 +95,70 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
 3. **Atualizar o template `lista_tarefas.html`**:
    - Modifique o arquivo `lista_tarefas.html` para utilizar os componentes do Bootstrap:
      ```html
-     {% extends 'base.html' %}
-     {% load bootstrap4 %}
-     {% block title %}Lista de Tarefas{% endblock %}
-     {% block content %}
-     <h2>Minhas Tarefas</h2>
+        {% extends 'base.html' %}
+        {% load bootstrap4 %}
+        {% block title %}Lista de Tarefas{% endblock %}
+        {% block content %}
+        <h2>Minhas Tarefas</h2>
 
-     <form method="POST" class="row g-3 mb-4">
-         {% csrf_token %}
-         <div class="col-auto">
-             <input type="text" name="titulo" class="form-control" placeholder="Adicione uma nova tarefa" required>
-         </div>
-         <div class="col-auto">
-             <button type="submit" class="btn btn-primary mb-3">Adicionar</button>
-         </div>
-     </form>
+        <form method="POST" class="row g-3 mb-4">
+            {% csrf_token %}
+            <div class="col-auto">
+                <input type="text" name="titulo" class="form-control" placeholder="Adicione uma nova tarefa" required>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Adicionar</button>
+            </div>
+        </form>
 
-     <ul class="list-group">
-         {% for tarefa in tarefas %}
-             <li class="list-group-item d-flex justify-content-between align-items-center {% if tarefa.concluida %}list-group-item-success{% endif %}">
-                 <div>
-                     {% if tarefa.concluida %}
-                         <s>{{ tarefa.titulo }}</s>
-                     {% else %}
-                         {{ tarefa.titulo }}
-                     {% endif %}
-                 </div>
-                 <div>
-                     {% if not tarefa.concluida %}
-                         <a href="{% url 'concluir_tarefa' tarefa.id %}" class="btn btn-sm btn-success">Concluir</a>
-                     {% endif %}
-                     <a href="{% url 'editar_tarefa' tarefa.id %}" class="btn btn-sm btn-warning">Editar</a>
-                     <a href="{% url 'excluir_tarefa' tarefa.id %}" class="btn btn-sm btn-danger" onclick="return confirmarExclusao();">Excluir</a>
-                 </div>
-             </li>
-         {% empty %}
-             <li class="list-group-item">Nenhuma tarefa adicionada.</li>
-         {% endfor %}
-     </ul>
-     {% endblock %}
+        <ul class="list-group">
+            {% for tarefa in tarefas %}
+            <li
+                class="list-group-item d-flex justify-content-between align-items-center {% if tarefa.concluida %}list-group-item-success{% endif %}">
+                <div>
+                    {% if tarefa.concluida %}
+                    <s>{{ tarefa.titulo }}</s>
+                    {% else %}
+                    {{ tarefa.titulo }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if not tarefa.concluida %}
+                    <a href="{% url 'concluir_tarefa' tarefa.id %}" class="btn btn-sm btn-success">Concluir</a>
+                    {% endif %}
+                    <a href="{% url 'editar_tarefa' tarefa.id %}" class="btn btn-sm btn-warning">Editar</a>
+                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                        data-target="#confirmModal-{{ tarefa.id }}">Excluir</button>
+                </div>
+            </li>
+            <div class="modal fade" id="confirmModal-{{ tarefa.id }}" tabindex="-1" role="dialog"
+                aria-labelledby="confirmModalLabel-{{ tarefa.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel-{{ tarefa.id }}">Confirmação de Exclusão</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Tem certeza de que deseja excluir a tarefa <strong>"{{ tarefa.titulo }}"</strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <form method="POST" action="{% url 'excluir_tarefa' tarefa.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <li class="list-group-item">Nenhuma tarefa adicionada.</li>
+            {% endfor %}
+        </ul>
+        {% endblock %}
      ```
 
 4. **Atualizar o template `editar_tarefa.html`**:
@@ -181,16 +206,22 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
 
      @login_required
      def lista_tarefas(request):
-         if request.method == 'POST':
-             titulo = request.POST.get('titulo')
-             if titulo:
-                 Tarefa.objects.create(titulo=titulo, usuario=request.user)
-                 messages.success(request, 'Tarefa adicionada com sucesso!')
-             else:
-                 messages.error(request, 'O título da tarefa não pode ser vazio.')
-             return redirect('lista_tarefas')
-         tarefas = Tarefa.objects.filter(usuario=request.user)
-         return render(request, 'lista_tarefas.html', {'tarefas': tarefas})
+        if request.method == 'POST':
+            titulo = request.POST.get('titulo')
+            if titulo:
+                if Tarefa.objects.filter(titulo=titulo, usuario=request.user).exists():
+                    messages.error(request, 'Já existe uma tarefa com este título.')
+                else:
+                    try:
+                        Tarefa.objects.create(titulo=titulo, usuario=request.user)
+                        messages.success(request, 'Tarefa adicionada com sucesso!')
+                    except IntegrityError:
+                        messages.error(request, 'Erro ao salvar a tarefa. Tente novamente.')
+            else:
+                messages.error(request, 'O título da tarefa não pode ser vazio.')
+                return redirect('lista_tarefas')
+        tarefas = Tarefa.objects.filter(usuario=request.user)
+        return render(request, 'lista_tarefas.html', {'tarefas': tarefas})
      ```
 
 2. **Exibir as mensagens nos templates**:
