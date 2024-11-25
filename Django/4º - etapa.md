@@ -248,19 +248,11 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
             <link rel="stylesheet" href="{% static 'css/style.css' %}">
         </head>
         <body>
-            <nav class="navbar">
-                <div class="navbar-container">
-                    <a href="{% url 'lista_tarefas' %}" class="navbar-brand">Minha Lista de Tarefas</a>
-                    <ul class="navbar-menu">
-                        <li><a href="{% url 'lista_tarefas' %}">Início</a></li>
-                        {% if user.is_authenticated %}
-                        <li><a href="{% url 'lista_tarefas' %}">Minhas tarefas</a></li>
-                        {% else %}
-                        <li><a href="{% url 'login' %}">Entrar</a></li>
-                        {% endif %}
-                    </ul>
+            <header>
+                <div class="container">
+                    <h1><a href="{% url 'lista_tarefas' %}" style="color: #fff; text-decoration: none;">Minha Lista de Tarefas</a></h1>
                 </div>
-            </nav>
+            </header>
             <div class="container">
                 {% if messages %}
                 <ul class="messages">
@@ -721,16 +713,19 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
    - Por exemplo, no `base.html`, adicione um menu:
 
      ```html
-     <nav>
-         <ul>
-             <li><a href="{% url 'lista_tarefas' %}">Início</a></li>
-             {% if user.is_authenticated %}
-                 <li><a href="{% url 'lista_tarefas' %}">Minhas Tarefas</a></li>
-             {% else %}
-                 <li><a href="{% url 'login' %}">Entrar</a></li>
-             {% endif %}
-         </ul>
-     </nav>
+     <nav class="navbar">
+        <div class="navbar-container">
+            <a href="{% url 'lista_tarefas' %}" class="navbar-brand">Minha Lista de Tarefas</a>
+                <ul class="navbar-menu">
+                    <li><a href="{% url 'lista_tarefas' %}">Início</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'lista_tarefas' %}">Minhas tarefas</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Entrar</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
      ```
 
    - Estilize o menu no CSS para que fique agradável visualmente.
