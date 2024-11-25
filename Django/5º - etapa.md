@@ -20,16 +20,13 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
    - No arquivo `settings.py` do projeto, adicione `'bootstrap4'` à lista de aplicações instaladas:
      ```python
      INSTALLED_APPS = [
-         # Apps Django padrão
          'django.contrib.admin',
          'django.contrib.auth',
          'django.contrib.contenttypes',
          'django.contrib.sessions',
          'django.contrib.messages',
          'django.contrib.staticfiles',
-         # Apps de terceiros
          'bootstrap4',
-         # App tarefas
          'tarefas',
      ]
      ```
@@ -45,7 +42,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
 2. **Atualizar o template base `base.html`**:
    - Modifique o arquivo `base.html` para incluir as referências ao CSS e JavaScript do Bootstrap usando as tags do `django-bootstrap4`:
      ```html
-     <!-- templates/base.html -->
      {% load bootstrap4 %}
      <!DOCTYPE html>
      <html lang="pt-BR">
@@ -54,7 +50,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
          <meta name="viewport" content="width=device-width, initial-scale=1">
          <title>{% block title %}To-Do List{% endblock %}</title>
          {% bootstrap_css %}
-         <link rel="stylesheet" href="{% static 'css/style.css' %}">
      </head>
      <body>
          <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -79,9 +74,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
                              <li class="nav-item">
                                  <a class="nav-link" href="{% url 'login' %}">Entrar</a>
                              </li>
-                             <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'registrar' %}">Registrar</a>
-                             </li>
                          {% endif %}
                      </ul>
                  </div>
@@ -96,7 +88,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
          </div>
 
          {% bootstrap_javascript jquery='full' %}
-         <script src="{% static 'js/script.js' %}"></script>
      </body>
      </html>
      ```
@@ -104,14 +95,12 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
 3. **Atualizar o template `lista_tarefas.html`**:
    - Modifique o arquivo `lista_tarefas.html` para utilizar os componentes do Bootstrap:
      ```html
-     <!-- tarefas/templates/tarefas/lista_tarefas.html -->
      {% extends 'base.html' %}
      {% load bootstrap4 %}
      {% block title %}Lista de Tarefas{% endblock %}
      {% block content %}
      <h2>Minhas Tarefas</h2>
 
-     <!-- Formulário para adicionar tarefas -->
      <form method="POST" class="row g-3 mb-4">
          {% csrf_token %}
          <div class="col-auto">
@@ -122,7 +111,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
          </div>
      </form>
 
-     <!-- Lista de tarefas -->
      <ul class="list-group">
          {% for tarefa in tarefas %}
              <li class="list-group-item d-flex justify-content-between align-items-center {% if tarefa.concluida %}list-group-item-success{% endif %}">
@@ -151,7 +139,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
 4. **Atualizar o template `editar_tarefa.html`**:
    - Atualize o arquivo `editar_tarefa.html` para utilizar o Bootstrap e as tags do `django-bootstrap4`:
      ```html
-     <!-- tarefas/templates/tarefas/editar_tarefa.html -->
      {% extends 'base.html' %}
      {% load bootstrap4 %}
      {% block title %}Editar Tarefa{% endblock %}
@@ -172,7 +159,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
 5. **Atualizar o template `login.html`**:
    - Modifique o arquivo `login.html` para utilizar o Bootstrap e as tags do `django-bootstrap4`:
      ```html
-     <!-- templates/registration/login.html -->
      {% extends 'base.html' %}
      {% load bootstrap4 %}
      {% block title %}Login{% endblock %}
@@ -186,29 +172,11 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
      {% endblock %}
      ```
 
-6. **Atualizar o template `registro.html`**:
-   - Se você possui um template de registro de usuário, atualize-o para utilizar o Bootstrap:
-     ```html
-     <!-- templates/registro.html -->
-     {% extends 'base.html' %}
-     {% load bootstrap4 %}
-     {% block title %}Registrar{% endblock %}
-     {% block content %}
-     <h2>Registrar-se</h2>
-     <form method="POST">
-         {% csrf_token %}
-         {% bootstrap_form form %}
-         <button type="submit" class="btn btn-primary">Registrar</button>
-     </form>
-     {% endblock %}
-     ```
-
 #### Parte 3: Ajustar as views se necessário
 
 1. **Atualizar as mensagens nas views**:
    - Utilize o framework de mensagens do Django para fornecer feedback ao usuário nas ações, se ainda não estiver utilizando:
      ```python
-     # tarefas/views.py
      from django.contrib import messages
 
      @login_required
