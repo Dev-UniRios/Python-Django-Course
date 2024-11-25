@@ -636,7 +636,7 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
      class Tarefa(models.Model):
          titulo = models.CharField(max_length=100, unique=True)
          concluida = models.BooleanField(default=False)
-         usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+         usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
          def __str__(self):
              return self.titulo
