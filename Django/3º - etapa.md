@@ -97,22 +97,27 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
 
 2. **Criar a view para editar a tarefa**:
    - No arquivo `views.py`, adicione a função `editar_tarefa` para carregar a tarefa, atualizar o título e salvar as alterações:
+
      ```python
      def editar_tarefa(request, id):
-         tarefa = get_object_or_404(Tarefa, id=id)
+        tarefa = get_object_or_404(Tarefa, id=id)
+        if request.method == 'POST':
+            novo_titulo = request.POST.get('titulo')
+            if novo_titulo:
+                if Tarefa.objects.filter(titulo=novo_titulo).exists():
+                    messages.error(request, 'Já existe uma tarefa com esse título.')
+                    return render(request, 'editar_tarefa.html', {'tarefa': tarefa, messages: messages})
 
-         if request.method == 'POST':
-             novo_titulo = request.POST.get('titulo')
-             if novo_titulo:
-                 tarefa.titulo = novo_titulo
-                 tarefa.save()
-                 return redirect('lista_tarefas')
+                tarefa.titulo = novo_titulo
+                tarefa.save()
+                return redirect('lista_tarefas')   
 
-         return render(request, 'editar_tarefa.html', {'tarefa': tarefa})
+        return render(request, 'editar_tarefa.html', {'tarefa': tarefa})
      ```
 
 3. **Criar o template `editar_tarefa.html`**:
    - Dentro de `templates/tarefas/`, crie um arquivo `editar_tarefa.html` para o formulário de edição:
+
      ```html
      <!DOCTYPE html>
      <html lang="pt-BR">
@@ -134,6 +139,7 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
 
 4. **Adicionar o botão de editar no template `lista_tarefas.html`**:
    - Inclua o botão de editar ao lado das tarefas:
+
      ```html
      <a href="{% url 'editar_tarefa' tarefa.id %}">Editar</a>
      ```
@@ -144,6 +150,7 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
 
 1. **Adicionar URLs de autenticação padrão do django**:
    - No `urls.py` do projeto principal, inclua os URLs de autenticação:
+
      ```python
      from django.contrib import admin
      from django.urls import path, include
@@ -157,6 +164,7 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
 
 2. **Associar usuários às tarefas**:
    - No `models.py` da aplicação `tarefas`, adicione uma referência ao usuário:
+
      ```python
      from django.contrib.auth.models import User, models
 
