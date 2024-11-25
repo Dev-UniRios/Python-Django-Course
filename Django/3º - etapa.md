@@ -26,7 +26,6 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
    - No arquivo `views.py`, crie a função `concluir_tarefa`, que altera o status da tarefa para concluída:
      ```python
      from django.shortcuts import render, redirect, get_object_or_404
-     from .models import Tarefa
 
      def concluir_tarefa(request, id):
          tarefa = get_object_or_404(Tarefa, id=id)
