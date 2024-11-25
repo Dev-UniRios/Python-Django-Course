@@ -98,6 +98,8 @@ Permitir que os usuários marquem tarefas como concluídas, excluam-nas e editem
    - No arquivo `views.py`, adicione a função `editar_tarefa` para carregar a tarefa, atualizar o título e salvar as alterações:
 
      ```python
+     from django.contrib import messages
+     
      def editar_tarefa(request, id):
         tarefa = get_object_or_404(Tarefa, id=id)
         if request.method == 'POST':
