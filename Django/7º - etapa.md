@@ -15,8 +15,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No arquivo `models.py`, ajuste o campo `imagem` para incluir variações de imagem com tamanhos específicos:
 
      ```python
-     # tarefas/models.py
-
      from stdimage.models import StdImageField
 
      class Tarefa(models.Model):
@@ -49,7 +47,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No template `lista_tarefas.html`, ajuste o código para exibir a miniatura em vez da imagem original:
 
      ```html
-     <!-- tarefas/templates/tarefas/lista_tarefas.html -->
      {% if tarefa.imagem %}
          <img src="{{ tarefa.imagem.thumb.url }}" alt="{{ tarefa.titulo }}" class="img-thumbnail me-2">
      {% endif %}
@@ -58,7 +55,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No template `editar_tarefa.html`, se desejar exibir a imagem atual, use a variação apropriada:
 
      ```html
-     <!-- tarefas/templates/tarefas/editar_tarefa.html -->
      {% if form.instance.imagem %}
          <img src="{{ form.instance.imagem.medium.url }}" alt="{{ form.instance.titulo }}" class="img-fluid mb-3">
      {% endif %}
@@ -71,8 +67,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - Crie um arquivo `signals.py` dentro da aplicação `tarefas` (se ainda não existir).
 
      ```python
-     # tarefas/signals.py
-
      from django.db.models.signals import post_delete
      from django.dispatch import receiver
      from .models import Tarefa
@@ -88,8 +82,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No arquivo `apps.py` da aplicação `tarefas`, importe o módulo de sinais na classe `TarefasConfig`:
 
      ```python
-     # tarefas/apps.py
-
      from django.apps import AppConfig
 
      class TarefasConfig(AppConfig):
@@ -102,8 +94,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - Certifique-se de que o `default_app_config` está definido no `__init__.py` da aplicação:
 
      ```python
-     # tarefas/__init__.py
-
      default_app_config = 'tarefas.apps.TarefasConfig'
      ```
 
@@ -118,7 +108,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No template `lista_tarefas.html`, estilize a exibição das imagens para melhor alinhamento e apresentação:
 
      ```html
-     <!-- tarefas/templates/tarefas/lista_tarefas.html -->
      <li class="list-group-item">
          <div class="row align-items-center">
              <div class="col-auto">
@@ -151,8 +140,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No arquivo `forms.py`, adicione um método `clean_imagem` para validar o tipo de arquivo:
 
      ```python
-     # tarefas/forms.py
-
      from django.core.exceptions import ValidationError
      from django.core.validators import FileExtensionValidator
 
@@ -178,7 +165,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - Certifique-se de que os erros de formulário são exibidos no template:
 
      ```html
-     <!-- tarefas/templates/tarefas/lista_tarefas.html -->
      {% if form.errors %}
          <div class="alert alert-danger">
              {{ form.errors }}
@@ -193,8 +179,6 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No `forms.py`, adicione uma verificação para o tamanho máximo do arquivo (por exemplo, 2 MB):
 
      ```python
-     # tarefas/forms.py
-
      class TarefaForm(forms.ModelForm):
          # Campos e validações existentes...
 
