@@ -48,7 +48,6 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
         usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
         imagem = StdImageField(upload_to='tarefas', variations={'thumb': (100, 100)}, blank=True, null=True)
 
-
         def __str__(self):
             return self.titulo
 
@@ -138,39 +137,61 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
      {% load bootstrap4 %}
      {% block title %}Lista de Tarefas{% endblock %}
      {% block content %}
-     <h2>Minhas Tarefas</h2>
+     <h2 class="mb-4">Minhas Tarefas</h2>
+        <form method="POST" enctype="multipart/form-data" class="mb-4">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+        </form>
 
-     <form method="POST" enctype="multipart/form-data" class="mb-4">
-         {% csrf_token %}
-         {% bootstrap_form form %}
-         <button type="submit" class="btn btn-primary">Adicionar</button>
-     </form>
+        <ul class="list-group">
+            {% for tarefa in tarefas %}
+                <li class="list-group-item d-flex justify-content-between align-items-center {% if tarefa.concluida %}list-group-item-success{% endif %}">
+                    <div class="d-flex align-items-center">
+                        {% if tarefa.imagem %}
+                            <img src="{{ tarefa.imagem.url }}" alt="{{ tarefa.titulo }}" class="img-thumbnail me-2" style="width: 50px; height: 50px;">
+                        {% endif %}
+                        {% if tarefa.concluida %}
+                            <s>{{ tarefa.titulo }}</s>
+                        {% else %}
+                            {{ tarefa.titulo }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% if not tarefa.concluida %}
+                            <a href="{% url 'concluir_tarefa' tarefa.id %}" class="btn btn-sm btn-success">Concluir</a>
+                        {% endif %}
+                        <a href="{% url 'editar_tarefa' tarefa.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmModal-{{ tarefa.id }}">Excluir</a>
+                    </div>
+                </li>
 
-     <ul class="list-group">
-         {% for tarefa in tarefas %}
-             <li class="list-group-item d-flex justify-content-between align-items-center {% if tarefa.concluida %}list-group-item-success{% endif %}">
-                 <div class="d-flex align-items-center">
-                     {% if tarefa.imagem %}
-                         <img src="{{ tarefa.imagem.url }}" alt="{{ tarefa.titulo }}" class="img-thumbnail me-2" style="width: 50px; height: 50px;">
-                     {% endif %}
-                     {% if tarefa.concluida %}
-                         <s>{{ tarefa.titulo }}</s>
-                     {% else %}
-                         {{ tarefa.titulo }}
-                     {% endif %}
-                 </div>
-                 <div>
-                     {% if not tarefa.concluida %}
-                         <a href="{% url 'concluir_tarefa' tarefa.id %}" class="btn btn-sm btn-success">Concluir</a>
-                     {% endif %}
-                     <a href="{% url 'editar_tarefa' tarefa.id %}" class="btn btn-sm btn-warning">Editar</a>
-                     <a href="{% url 'excluir_tarefa' tarefa.id %}" class="btn btn-sm btn-danger" onclick="return confirmarExclusao();">Excluir</a>
-                 </div>
-             </li>
-         {% empty %}
-             <li class="list-group-item">Nenhuma tarefa adicionada.</li>
-         {% endfor %}
-     </ul>
+                <div class="modal fade" id="confirmModal-{{ tarefa.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel-{{ tarefa.id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmModalLabel-{{ tarefa.id }}">Confirmar Exclusão</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza de que deseja excluir a tarefa <strong>"{{ tarefa.titulo }}"</strong>?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form method="POST" action="{% url 'excluir_tarefa' tarefa.id %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <li class="list-group-item">Nenhuma tarefa adicionada.</li>
+            {% endfor %}
+        </ul>
      {% endblock %}
      ```
 
