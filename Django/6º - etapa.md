@@ -20,17 +20,14 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
    - No arquivo `settings.py` do projeto, adicione `'stdimage'` à lista de aplicações instaladas:
      ```python
      INSTALLED_APPS = [
-         # Apps Django padrão
          'django.contrib.admin',
          'django.contrib.auth',
          'django.contrib.contenttypes',
          'django.contrib.sessions',
          'django.contrib.messages',
          'django.contrib.staticfiles',
-         # Apps de terceiros
          'bootstrap4',
          'stdimage',
-         # App tarefas
          'tarefas',
      ]
      ```
@@ -40,16 +37,14 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 1. **Modificar o modelo `Tarefa`**:
    - No arquivo `models.py` da aplicação `tarefas`, importe `StdImageField` e adicione um campo de imagem ao modelo `Tarefa`:
      ```python
-     # tarefas/models.py
-
      from django.db import models
      from django.contrib.auth.models import User
      from stdimage.models import StdImageField
 
      class Tarefa(models.Model):
-         titulo = models.CharField(max_length=100)
+         titulo = models.CharField(max_length=100, unique=True)
          concluida = models.BooleanField(default=False)
-         usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+         usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
          imagem = StdImageField(upload_to='tarefas', variations={'thumb': (100, 100)}, blank=True, null=True)
 
          def __str__(self):
@@ -71,8 +66,6 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 1. **Criar ou atualizar o formulário `TarefaForm`**:
    - Crie um arquivo `forms.py` dentro da aplicação `tarefas` (se ainda não existir) e defina o `TarefaForm`:
      ```python
-     # tarefas/forms.py
-
      from django import forms
      from .models import Tarefa
 
@@ -85,8 +78,6 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 2. **Modificar a view `lista_tarefas` para usar o formulário**:
    - No arquivo `views.py`, atualize a função `lista_tarefas` para lidar com o upload de imagens:
      ```python
-     # tarefas/views.py
-
      from django.shortcuts import render, redirect
      from django.contrib.auth.decorators import login_required
      from django.contrib import messages
@@ -137,21 +128,18 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 1. **Modificar o template `lista_tarefas.html`**:
    - Atualize o template para exibir o formulário utilizando o `django-bootstrap4` e incluir o campo de imagem:
      ```html
-     <!-- tarefas/templates/tarefas/lista_tarefas.html -->
      {% extends 'base.html' %}
      {% load bootstrap4 %}
      {% block title %}Lista de Tarefas{% endblock %}
      {% block content %}
      <h2>Minhas Tarefas</h2>
 
-     <!-- Formulário para adicionar tarefas -->
      <form method="POST" enctype="multipart/form-data" class="mb-4">
          {% csrf_token %}
          {% bootstrap_form form %}
          <button type="submit" class="btn btn-primary">Adicionar</button>
      </form>
 
-     <!-- Lista de tarefas -->
      <ul class="list-group">
          {% for tarefa in tarefas %}
              <li class="list-group-item d-flex justify-content-between align-items-center {% if tarefa.concluida %}list-group-item-success{% endif %}">
@@ -183,7 +171,6 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 2. **Modificar o template `editar_tarefa.html`**:
    - Atualize o template para permitir a edição da imagem:
      ```html
-     <!-- tarefas/templates/tarefas/editar_tarefa.html -->
      {% extends 'base.html' %}
      {% load bootstrap4 %}
      {% block title %}Editar Tarefa{% endblock %}
@@ -203,10 +190,6 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 1. **Atualizar as configurações no `settings.py`**:
    - Adicione as configurações para manipulação de arquivos de mídia:
      ```python
-     # lista_de_tarefas/settings.py
-
-     import os
-
      MEDIA_URL = '/media/'
      MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
      ```
@@ -214,8 +197,6 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
 2. **Atualizar o `urls.py` do projeto para servir arquivos de mídia no desenvolvimento**:
    - No arquivo `urls.py` do projeto principal, adicione as configurações para servir arquivos de mídia durante o desenvolvimento:
      ```python
-     # lista_de_tarefas/urls.py
-
      from django.contrib import admin
      from django.urls import path, include
      from django.conf import settings
