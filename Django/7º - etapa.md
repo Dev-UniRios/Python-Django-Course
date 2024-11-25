@@ -140,8 +140,10 @@ Aprimorar a funcionalidade de upload de imagens, adicionando miniaturas e redime
    - No arquivo `forms.py`, adicione um método `clean_imagem` para validar o tipo de arquivo:
 
      ```python
+     from django import forms
      from django.core.exceptions import ValidationError
      from django.core.validators import FileExtensionValidator
+     from tarefas.models import Tarefa
 
      class TarefaForm(forms.ModelForm):
          imagem = forms.ImageField(required=False, validators=[
