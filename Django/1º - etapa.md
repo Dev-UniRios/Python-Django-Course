@@ -105,8 +105,6 @@ Criar uma página HTML simples usando Django, que simule uma lista de tarefas se
 
 ---
 
-### Próximos passos
+### Próximos passos 🚀
 
-- Adicionar um modelo `Tarefa` para armazenar as tarefas no banco de dados.
-- Ajustar a view para buscar tarefas do banco de dados.
-- Criar um formulário para adicionar novas tarefas à lista.
+[👉 Continue para o próximo material!](https://github.com/Dev-UniRios/Python-Django-Course/blob/main/Django/2%C2%BA%20-%20etapa.md)

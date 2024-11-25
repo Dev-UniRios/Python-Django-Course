@@ -208,9 +208,6 @@ Melhorar o design e a usabilidade da aplicação utilizando o pacote `django-boo
    - Caso esteja utilizando JavaScript personalizado, certifique-se de que está compatível com o Bootstrap 4.
    - Por exemplo, se você estiver utilizando componentes interativos do Bootstrap que dependem de JavaScript (como modais ou tooltips), verifique se o JavaScript está funcionando corretamente.
 
-### Próximos passos
+### Próximos passos 🚀
 
-- Instalar e configurar o pacote `django-stdimage` para lidar com imagens.
-- Atualizar o modelo Tarefa para incluir o campo de upload de imagens.
-- Criar um formulário `TarefaForm` para manipular tarefas com imagens.
-- Modificar as views para suportar upload e edição de imagens.
+[👉 Continue para o próximo material!](https://github.com/Dev-UniRios/Python-Django-Course/blob/main/Django/6%C2%BA%20-%20etapa.md)

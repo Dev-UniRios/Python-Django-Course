@@ -218,9 +218,6 @@ Adicionar a funcionalidade de upload de imagens às tarefas utilizando o pacote 
    ```bash
    python manage.py runserver
 
-### Próximos passos
+### Próximos passos 🚀
 
-- Configurar variações de imagem para miniaturas e redimensionamento no modelo `Tarefa`.
-- Aplicar migrações para atualizar o banco de dados com as variações de imagem.
-- Atualizar templates para exibir as miniaturas e imagens redimensionadas.
-- Implementar sinais para excluir imagens órfãs ao remover tarefas.
+[👉 Continue para o próximo material!](https://github.com/Dev-UniRios/Python-Django-Course/blob/main/Django/7%C2%BA%20-%20etapa.md)

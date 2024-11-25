@@ -135,9 +135,6 @@ Criar uma aplicação de lista de tarefas em Django, permitindo que os usuários
 
 ---
 
-### Próximos passos
+### Próximos passos 🚀
 
-- Permitir que os usuários marquem tarefas como concluídas.
-- Adicionar a funcionalidade de excluir tarefas.
-- Implementar a edição de títulos de tarefas.
-- Adicionar autenticação de usuários para que cada um tenha suas próprias listas.
+[👉 Continue para o próximo material!](https://github.com/Dev-UniRios/Python-Django-Course/blob/main/Django/3%C2%BA%20-%20etapa.md)

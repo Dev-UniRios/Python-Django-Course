@@ -730,9 +730,6 @@ Organizar os arquivos estáticos (CSS, JavaScript e imagens) da aplicação e me
 
    - Estilize o menu no CSS para que fique agradável visualmente.
 
-### Próximos passos
+### Próximos passos 🚀
 
-- Instalar e configurar o pacote `django-bootstrap4`.
-- Atualizar o template base.html para incluir o Bootstrap.
-- Reestruturar os templates para utilizar componentes do Bootstrap.
-- Implementar o framework de mensagens com estilo do Bootstrap.
+[👉 Continue para o próximo material!](https://github.com/Dev-UniRios/Python-Django-Course/blob/main/Django/5%C2%BA%20-%20etapa.md)
